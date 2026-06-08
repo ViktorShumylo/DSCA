@@ -343,14 +343,14 @@
 <!-- HEADER -->
 <div class="header">
   <div class="header-left">
-    <h1>DSCA KPI Tree — Draft v0.1</h1>
+    <h1>DSCA KPI Tree — v1</h1>
     <div class="subtitle">Domain-Specific Curriculum Advisors · Strategic Program KPIs</div>
   </div>
   <div class="header-right">
-    <strong>Per Scholas | Curriculum Solutions</strong>
+    Per Scholas | Curriculum Solutions | Per Scholas<br>
     Owner: Viktor Shumylo, Director, Strategic Programs<br>
     Reviewed with: Bolaji Saibu, VP, Product Strategy &amp; Innovation<br>
-    Status: Draft · June 2026
+    Status: v1 · Pending sign-off · June 2026
   </div>
 </div>
 
@@ -447,11 +447,11 @@
           <div class="kpi-dot" style="background:var(--e1)"></div>
           <div class="kpi-content">
             <div class="kpi-name">Micro Coverage</div>
-            <div class="kpi-def">% of target courses with completed Micro (skill/competency-level) advisor capture</div>
+            <div class="kpi-def">% of target courses with completed Micro (skill/competency-level) advisor capture. <em>Scope decision pending Enterprise Solutions alignment — recommendation is to focus on Macro across all market-driven products this year and re-introduce Micro in 2027.</em></div>
             <div class="kpi-meta">
-              <span class="kpi-tag target">Target: ≥ 60% by Day 60</span>
+              <span class="kpi-tag target">Target: TBC after Laura Standley alignment</span>
               <span class="kpi-tag source">Source: Airtable</span>
-              <span class="kpi-tag cadence">Monthly</span>
+              <span class="kpi-tag cadence">Monthly (once activated)</span>
             </div>
           </div>
         </div>
@@ -489,8 +489,8 @@
         <div class="kpi-leaf">
           <div class="kpi-dot" style="background:var(--e2)"></div>
           <div class="kpi-content">
-            <div class="kpi-name">Signal Triage SLA</div>
-            <div class="kpi-def">% of Engine 2 signals triaged (accept / defer / decline) within 48 hours of submission</div>
+            <div class="kpi-name">Signal Triage SLA (System / Broken)</div>
+            <div class="kpi-def">% of Engine 2 system-level signals (broken links, dev-side issues) triaged within 48 hours. <em>Design / content / curriculum-change signals follow a separate, longer cadence — to be defined in Engine 2 SOP refinement.</em></div>
             <div class="kpi-meta">
               <span class="kpi-tag target">Target: 100%</span>
               <span class="kpi-tag source">Source: Asana log</span>
@@ -520,10 +520,10 @@
           <div class="kpi-dot" style="background:var(--e2)"></div>
           <div class="kpi-content">
             <div class="kpi-name">Close-the-Loop Rate</div>
-            <div class="kpi-def">% of accepted signals with a documented response sent back to the originating source</div>
+            <div class="kpi-def">% of accepted signals with a documented response sent back to the originating advisor. <em>Owned by Enterprise Solutions (Laura Standley's team) — Design provides the data they need to close the loop.</em></div>
             <div class="kpi-meta">
-              <span class="kpi-tag target">Target: ≥ 90%</span>
-              <span class="kpi-tag source">Source: Airtable</span>
+              <span class="kpi-tag target">Target: 100%</span>
+              <span class="kpi-tag source">Owner: Enterprise Solutions</span>
               <span class="kpi-tag cadence">Quarterly</span>
             </div>
           </div>
@@ -595,7 +595,7 @@
             <div class="kpi-name">Credential Attainment Rate</div>
             <div class="kpi-def">% of learners in DSCA-validated programs earning the target credential</div>
             <div class="kpi-meta">
-              <span class="kpi-tag target">Threshold: ≥ 70% (Salesforce trigger)</span>
+              <span class="kpi-tag target">Target: ≥ 80% (org KPI)</span>
               <span class="kpi-tag source">Source: Salesforce</span>
               <span class="kpi-tag cadence">Per cohort</span>
             </div>
@@ -665,26 +665,30 @@
   <div class="note-box">
     <h4>Open Decisions (Required Before Day 60)</h4>
     <ul>
-      <li><strong>Engine 2 architecture:</strong> Airtable vs. Shahparan's internal app vs. fold-together. Viktor owns framing; Shahparan + Kayla own technical eval.</li>
-      <li><strong>Dashboard platform:</strong> Follows the Engine 2 architecture decision. Airtable preferred if standalone; Shahparan's app if integrated.</li>
-      <li><strong>Baseline data pull:</strong> Salesforce access + Airtable sandbox confirmed. First pull needed to set JAR / credential attainment baselines.</li>
+      <li><strong>Engine 1 scope this year:</strong> Stay Macro across all market-driven products and defer Micro to 2027? Recommendation in flight — aligning with Laura Standley (Enterprise Solutions).</li>
+      <li><strong>Engine 2 architecture:</strong> Airtable vs. Shahparan's internal app vs. fold-together. Viktor owns framing after discovery call with Shahparan; technical eval routes to Shahparan + Kayla.</li>
+      <li><strong>Signal Triage SLA split:</strong> Separate cadence for system/broken signals (48h, dev team) vs. design/content signals (longer, owned by Design team). To be defined in Engine 2 SOP refinement.</li>
+      <li><strong>Dashboard platform:</strong> Bolaji has begun building dashboard views in Airtable (à la carte input, focus group findings, filtered-by-product view). Integration vs. consolidation TBD.</li>
+      <li><strong>Baseline data pull:</strong> Salesforce access confirmed. First pull needed to set credential attainment and JAR baselines.</li>
     </ul>
   </div>
   <div class="note-box">
-    <h4>Data Source Map</h4>
+    <h4>Data Source &amp; Ownership Map</h4>
     <ul>
-      <li><strong>Airtable:</strong> DSCA signal log, advisor tracking, triage status, close-the-loop log</li>
+      <li><strong>Airtable:</strong> DSCA signal log, advisor tracking, à la carte and focus group inputs, gate status, synthesis briefs</li>
       <li><strong>Salesforce:</strong> JAR, credential attainment, cohort completion, employer satisfaction</li>
-      <li><strong>Asana:</strong> Decision log, 48hr triage SLA, Phase 2 gate evidence</li>
+      <li><strong>Asana:</strong> Decision log, triage SLA tracking, Phase 2 gate evidence</li>
+      <li><strong>Enterprise Solutions (Laura Standley team):</strong> Advisor outreach, survey distribution, close-the-loop with advisors</li>
       <li><strong>DSCA Session Surveys:</strong> NPS, Alignment Score (E1); per-cycle cadence</li>
       <li><strong>Canvas:</strong> Help desk feedback volume (Engine 2 input, not output KPI)</li>
+      <li><strong>Primary signal source:</strong> Employer partners + LMI (Engine 1). Internal stakeholders (Engine 2) validate and shift the signal.</li>
     </ul>
   </div>
 </div>
 
 <!-- FOOTER -->
 <div class="footer">
-  <span>DSCA KPI Tree · Draft v0.1 · Per Scholas Curriculum Solutions · Internal Use Only</span>
+  <span>DSCA KPI Tree · v1 · Per Scholas Curriculum Solutions · Internal Use Only</span>
   <span>Viktor Shumylo · Director, Strategic Programs · June 2026</span>
 </div>
 
