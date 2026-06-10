@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DSCA KPI Tree — Per Scholas</title>
+<title>DSCA — Per Scholas</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700&display=swap');
 
   :root {
     --ps-teal: #00A79D;
@@ -19,6 +19,7 @@
     --dash: #6C63FF;
     --text: #1B2A4A;
     --muted: #718096;
+    --warn: #E53E3E;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -27,15 +28,55 @@
     font-family: 'Inter', sans-serif;
     background: #F7F9FC;
     color: var(--text);
-    padding: 40px 48px;
-    max-width: 1100px;
-    margin: 0 auto;
     font-size: 13px;
     line-height: 1.5;
   }
 
-  /* Header */
-  .header {
+  /* ─── TAB NAV ─── */
+  .tab-nav {
+    background: var(--ps-navy);
+    padding: 0 48px;
+    display: flex;
+    gap: 4px;
+    align-items: flex-end;
+  }
+  .tab-btn {
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.55);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 14px 20px 12px;
+    cursor: pointer;
+    letter-spacing: 0.2px;
+    border-bottom: 3px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+    white-space: nowrap;
+  }
+  .tab-btn:hover {
+    color: rgba(255,255,255,0.85);
+  }
+  .tab-btn.active {
+    color: #fff;
+    border-bottom-color: var(--ps-teal);
+  }
+
+  /* ─── PANELS ─── */
+  .tab-panel {
+    display: none;
+    padding: 40px 48px;
+    max-width: 1180px;
+    margin: 0 auto;
+  }
+  .tab-panel.active { display: block; }
+
+
+  /* ════════════════════════════════════════
+     KPI TREE STYLES
+  ════════════════════════════════════════ */
+
+  #kpi .header {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
@@ -43,34 +84,33 @@
     padding-bottom: 20px;
     border-bottom: 2px solid var(--ps-teal);
   }
-  .header-left h1 {
+  #kpi .header-left h1 {
     font-family: 'DM Serif Display', serif;
     font-size: 26px;
     color: var(--ps-navy);
     letter-spacing: -0.3px;
     margin-bottom: 4px;
   }
-  .header-left .subtitle {
+  #kpi .header-left .subtitle {
     font-size: 12px;
     color: var(--muted);
     font-weight: 500;
     letter-spacing: 0.5px;
     text-transform: uppercase;
   }
-  .header-right {
+  #kpi .header-right {
     text-align: right;
     font-size: 11px;
     color: var(--muted);
     line-height: 1.8;
   }
-  .header-right strong {
+  #kpi .header-right strong {
     color: var(--ps-navy);
     display: block;
     font-size: 12px;
     font-weight: 600;
   }
 
-  /* Legend */
   .legend {
     display: flex;
     gap: 24px;
@@ -92,7 +132,6 @@
     flex-shrink: 0;
   }
 
-  /* Trunk */
   .trunk {
     background: var(--ps-navy);
     color: #fff;
@@ -103,22 +142,10 @@
     align-items: center;
     gap: 14px;
   }
-  .trunk-icon {
-    font-size: 18px;
-    opacity: 0.85;
-  }
-  .trunk-text h2 {
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: 0.2px;
-  }
-  .trunk-text p {
-    font-size: 11.5px;
-    opacity: 0.7;
-    margin-top: 1px;
-  }
+  .trunk-icon { font-size: 18px; opacity: 0.85; }
+  .trunk-text h2 { font-size: 14px; font-weight: 700; letter-spacing: 0.2px; }
+  .trunk-text p { font-size: 11.5px; opacity: 0.7; margin-top: 1px; }
 
-  /* Connector line */
   .connector {
     width: 2px;
     height: 20px;
@@ -126,7 +153,6 @@
     margin: 0 auto 0 34px;
   }
 
-  /* Branch row */
   .branch-row {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -166,14 +192,9 @@
   .e2-head { background: var(--e2); }
   .dash-head { background: var(--dash); }
 
-  .branch-body {
-    padding: 12px 14px 14px;
-  }
+  .branch-body { padding: 12px 14px 14px; }
 
-  /* KPI leaf */
-  .kpi-group {
-    margin-bottom: 10px;
-  }
+  .kpi-group { margin-bottom: 10px; }
   .kpi-group:last-child { margin-bottom: 0; }
 
   .kpi-group-label {
@@ -206,7 +227,6 @@
     margin-top: 4px;
   }
 
-  .kpi-content {}
   .kpi-name {
     font-weight: 600;
     font-size: 12.5px;
@@ -236,7 +256,6 @@
   .kpi-tag.source { background: #FFF4EA; color: #B75D00; }
   .kpi-tag.cadence { background: #EEF0FF; color: #4A40B0; }
 
-  /* Timeline bar */
   .timeline-row {
     margin-top: 28px;
     background: #fff;
@@ -263,11 +282,7 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
   }
-  .milestone {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
+  .milestone { display: flex; flex-direction: column; gap: 4px; }
   .milestone-date {
     font-family: 'DM Mono', monospace;
     font-size: 10.5px;
@@ -275,22 +290,13 @@
     color: var(--ps-orange);
     letter-spacing: 0.3px;
   }
-  .milestone-label {
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--ps-navy);
-  }
-  .milestone-detail {
-    font-size: 11px;
-    color: var(--muted);
-    line-height: 1.45;
-  }
+  .milestone-label { font-size: 12px; font-weight: 600; color: var(--ps-navy); }
+  .milestone-detail { font-size: 11px; color: var(--muted); line-height: 1.45; }
   .milestone-divider {
     border-left: 2px solid var(--ps-border);
     padding-left: 10px;
   }
 
-  /* Notes row */
   .notes-row {
     margin-top: 12px;
     display: grid;
@@ -319,7 +325,332 @@
   }
   .note-box li::marker { color: var(--ps-teal); }
 
-  /* Footer */
+
+  /* ════════════════════════════════════════
+     SYSTEM MAP STYLES
+  ════════════════════════════════════════ */
+
+  #sysmap .header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 28px;
+    padding-bottom: 18px;
+    border-bottom: 2px solid var(--ps-teal);
+  }
+  #sysmap .header-left h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px;
+    color: var(--ps-navy);
+    letter-spacing: -0.3px;
+    margin-bottom: 4px;
+  }
+  #sysmap .header-left .subtitle {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  #sysmap .header-right {
+    text-align: right;
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+
+  #sysmap .trunk {
+    background: linear-gradient(135deg, var(--ps-navy) 0%, #2D3F66 100%);
+    color: white;
+    padding: 22px 28px;
+    border-radius: 10px;
+    display: flex;
+    gap: 22px;
+    align-items: center;
+    margin-bottom: 14px;
+    box-shadow: 0 4px 14px rgba(27, 42, 74, 0.12);
+  }
+  #sysmap .trunk-icon { font-size: 36px; line-height: 1; }
+  #sysmap .trunk-text h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 19px;
+    margin-bottom: 4px;
+    font-weight: 400;
+  }
+  #sysmap .trunk-text p {
+    font-size: 12px;
+    color: rgba(255,255,255,0.78);
+    line-height: 1.55;
+  }
+
+  .arrow-down {
+    width: 0; height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 10px solid var(--ps-border);
+    margin: 0 auto 14px;
+  }
+
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 16px;
+    color: var(--ps-navy);
+    margin-bottom: 10px;
+    margin-top: 22px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title::before {
+    content: '';
+    width: 4px;
+    height: 16px;
+    background: var(--ps-teal);
+    border-radius: 2px;
+  }
+
+  .engines {
+    display: grid;
+    grid-template-columns: 1fr 60px 1fr;
+    gap: 0;
+    margin-bottom: 14px;
+    align-items: stretch;
+  }
+  .engine {
+    background: white;
+    border-radius: 10px;
+    border: 1px solid var(--ps-border);
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(27,42,74,0.04);
+  }
+  .engine-head {
+    padding: 14px 18px;
+    color: white;
+  }
+  .engine-head.e1 { background: var(--e1); }
+  .engine-head.e2 { background: var(--e2); }
+  .engine-head .tag {
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    opacity: 0.85;
+    font-weight: 600;
+  }
+  .engine-head .name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 17px;
+    margin-top: 2px;
+  }
+  .engine-body { padding: 16px 18px; }
+  .engine-tagline {
+    font-size: 12px;
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed var(--ps-border);
+  }
+  .row { margin-bottom: 9px; font-size: 12px; line-height: 1.5; }
+  .row strong {
+    display: inline-block;
+    min-width: 90px;
+    color: var(--ps-navy);
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .row span { color: var(--ps-slate); }
+
+  .gate-strip {
+    display: flex;
+    gap: 4px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+  }
+  .gate {
+    background: #EEF8F7;
+    border: 1px solid #B8E5E1;
+    color: var(--e1);
+    padding: 4px 8px;
+    border-radius: 5px;
+    font-size: 10.5px;
+    font-weight: 600;
+    font-family: 'DM Mono', monospace;
+  }
+  .gate-e2 {
+    background: #FFF1E6;
+    border-color: #F9CFA3;
+    color: var(--e2);
+  }
+
+  .engine-connector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+  }
+  .connector-arrow { font-size: 22px; color: var(--ps-slate); font-weight: 300; }
+  .connector-label {
+    font-size: 9px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .card {
+    background: white;
+    border: 1px solid var(--ps-border);
+    border-radius: 8px;
+    padding: 13px 14px;
+    box-shadow: 0 1px 2px rgba(27,42,74,0.03);
+  }
+  .card-label {
+    font-size: 10px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .card-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ps-navy);
+    margin-bottom: 6px;
+  }
+  .card-detail {
+    font-size: 11.5px;
+    color: var(--ps-slate);
+    line-height: 1.5;
+  }
+
+  .dep-row {
+    display: grid;
+    grid-template-columns: 170px 1fr 130px;
+    gap: 14px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--ps-border);
+    font-size: 12px;
+    align-items: start;
+  }
+  .dep-row:last-child { border-bottom: none; }
+  .dep-name { font-weight: 600; color: var(--ps-navy); font-size: 12px; }
+  .dep-detail { color: var(--ps-slate); line-height: 1.45; }
+  .dep-owns { font-size: 10.5px; color: var(--muted); font-style: italic; }
+  .dep-block {
+    background: white;
+    border: 1px solid var(--ps-border);
+    border-radius: 10px;
+    padding: 8px 18px;
+  }
+
+  .system-card {
+    background: white;
+    border: 1px solid var(--ps-border);
+    border-left: 3px solid var(--ps-teal);
+    border-radius: 6px;
+    padding: 11px 13px;
+  }
+  .system-card .name {
+    font-weight: 700;
+    color: var(--ps-navy);
+    font-size: 12px;
+    margin-bottom: 3px;
+  }
+  .system-card .role {
+    font-size: 10.5px;
+    color: var(--ps-slate);
+    line-height: 1.45;
+  }
+  .system-card.sor { border-left-color: var(--ps-orange); background: #FFFBF7; }
+
+  .status-row {
+    background: white;
+    border: 1px solid var(--ps-border);
+    border-radius: 10px;
+    padding: 18px 22px;
+    margin-bottom: 14px;
+  }
+  .status-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 4px;
+  }
+  .status-item {
+    border-left: 3px solid var(--ps-teal);
+    padding: 4px 0 4px 12px;
+  }
+  .status-item.amber { border-left-color: var(--ps-orange); }
+  .status-item.violet { border-left-color: var(--dash); }
+  .status-item.red { border-left-color: var(--warn); }
+  .status-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    color: var(--muted);
+    font-weight: 600;
+    margin-bottom: 3px;
+  }
+  .status-value {
+    font-size: 13px;
+    color: var(--ps-navy);
+    font-weight: 600;
+    line-height: 1.35;
+  }
+  .status-detail {
+    font-size: 11px;
+    color: var(--ps-slate);
+    margin-top: 3px;
+    line-height: 1.4;
+  }
+
+  .decision-card {
+    background: linear-gradient(135deg, #FFF8F0 0%, #FFFFFF 100%);
+    border: 1px solid #F9CFA3;
+    border-left: 4px solid var(--ps-orange);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 14px;
+  }
+  .decision-card h4 {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--ps-orange);
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .decision-card .question {
+    font-family: 'DM Serif Display', serif;
+    font-size: 15px;
+    color: var(--ps-navy);
+    margin-bottom: 6px;
+  }
+  .decision-card .body {
+    font-size: 12px;
+    color: var(--ps-slate);
+    line-height: 1.55;
+  }
+  .decision-card .body strong { color: var(--ps-navy); }
+
+  /* ─── SHARED FOOTER ─── */
   .footer {
     margin-top: 20px;
     padding-top: 12px;
@@ -331,366 +662,609 @@
   }
   .footer strong { color: var(--ps-navy); }
 
-  /* Print */
   @media print {
-    body { padding: 24px; background: #fff; }
-    .branch, .timeline-row, .note-box { box-shadow: none; }
+    .tab-nav { display: none; }
+    .tab-panel { display: block !important; padding: 24px; background: #fff; }
+    .branch, .timeline-row, .note-box, .engine, .card, .system-card, .status-row, .decision-card { box-shadow: none; }
   }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
-<div class="header">
-  <div class="header-left">
-    <h1>DSCA KPI Tree — v1</h1>
-    <div class="subtitle">Domain-Specific Curriculum Advisors · Strategic Program KPIs</div>
+<!-- TAB NAV -->
+<nav class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab('kpi', this)">DSCA KPI Tree</button>
+  <button class="tab-btn" onclick="switchTab('sysmap', this)">DSCA System Map</button>
+</nav>
+
+
+<!-- TAB 1 — KPI TREE -->
+<div id="kpi" class="tab-panel active">
+
+  <div class="header">
+    <div class="header-left">
+      <h1>DSCA KPI Tree — v1</h1>
+      <div class="subtitle">Domain-Specific Curriculum Advisors · Strategic Program KPIs</div>
+    </div>
+    <div class="header-right">
+      Per Scholas | Curriculum Solutions<br>
+      Owner: Viktor Shumylo, Director, Strategic Programs<br>
+      Reviewed with: Bolaji Saibu, VP, Product Strategy &amp; Innovation<br>
+      Status: v1 · Signed off Jun 9 · Bolaji Saibu
+    </div>
   </div>
-  <div class="header-right">
-    Per Scholas | Curriculum Solutions | Per Scholas<br>
-    Owner: Viktor Shumylo, Director, Strategic Programs<br>
-    Reviewed with: Bolaji Saibu, VP, Product Strategy &amp; Innovation<br>
-    Status: v1 · Pending sign-off · June 2026
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--e1)"></div> Engine 1 — External Market Signal</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--e2)"></div> Engine 2 — Internal Feedback Loop</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--dash)"></div> Program Health &amp; Dashboard</div>
   </div>
+
+  <div class="trunk">
+    <div class="trunk-icon">🎯</div>
+    <div class="trunk-text">
+      <h2>DSCA Program Goal: Employer-validated curriculum that drives measurable learner outcomes and labor-market placement</h2>
+      <p>Signal → Curriculum Decision → Delivery → Outcome. Both engines required. Neither dominates.</p>
+    </div>
+  </div>
+  <div class="connector"></div>
+
+  <div class="branch-row">
+
+    <!-- ENGINE 1 -->
+    <div class="branch">
+      <div class="branch-header e1-head">
+        <div>
+          <div class="branch-label">Engine 1</div>
+          <div class="branch-title">External Market Signal</div>
+        </div>
+      </div>
+      <div class="branch-body">
+
+        <div class="kpi-group">
+          <div class="kpi-group-label">Employer Engagement</div>
+
+          <div class="kpi-leaf">
+            <div class="kpi-dot" style="background:var(--e1)"></div>
+            <div class="kpi-content">
+              <div class="kpi-name">Advisor NPS</div>
+              <div class="kpi-def">Net Promoter Score from DSCA employer advisors post-session</div>
+              <div class="kpi-meta">
+                <span class="kpi-tag target">Target: ≥ 70</span>
+                <span class="kpi-tag source">Source: DSCA survey</span>
+                <span class="kpi-tag cadence">Per cycle</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="kpi-leaf">
+            <div class="kpi-dot" style="background:var(--e1)"></div>
+            <div class="kpi-content">
+              <div class="kpi-name">Advisor Participation Rate</div>
+              <div class="kpi-def">% of invited advisors who complete a session in the period</div>
+              <div class="kpi-meta">
+                <span class="kpi-tag target">Target: ≥ 80%</span>
+                <span class="kpi-tag source">Source: Airtable</span>
+                <span class="kpi-tag cadence">Quarterly</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="kpi-leaf">
+            <div class="kpi-dot" style="background:var(--e1)"></div>
+            <div class="kpi-content">
+              <div class="kpi-name">Macro Coverage</div>
+              <div class="kpi-def">% of active domains with ≥1 completed Macro advisor session</div>
+              <div class="kpi-meta">
+                <span class="kpi-tag target">Target: 100% by Q3</span>
+                <span class="kpi-tag source">Source: Airtable</span>
+                <span class="kpi-tag cadence">Monthly</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="kpi-group">
+          <div class="kpi-group-label">Signal Alignment</div>
+
+          <div class="kpi-leaf">
+            <div class="kpi-dot" style="background:var(--e1)"></div>
+            <div class="kpi-content">
+              <div class="kpi-name">Curriculum Alignment Score</div>
+              <div class="kpi-def">Advisor-rated match between current curriculum and employer skill needs (1–5 scale)</div>
+              <div class="kpi-meta">
+                <span class="kpi-tag target">Target: ≥ 4.0</span>
+                <span class="kpi-tag source">Source: DSCA session</span>
+                <span class="kpi-tag cadence">Per cycle</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="kpi-leaf">
+            <div class="kpi-dot" style="background:var(--e1)"></div>
+            <div class="kpi-content">
+              <div class="kpi-name">Micro Coverage</div>
+              <div class="kpi-def">% of target courses with completed Micro (skill/competency-level) advisor capture. <em>Scope decision pending Enterprise Solutions alignment — recommendation is to focus on Macro across all market-driven products this year and re-introduce Micro in 2027.</em></div>
+              <div class="kpi-meta">
+                <span class="kpi-tag target">Target: TBC after Laura Standley alignment</span>
+                <span class="kpi-tag source">Source: Airtable</span>
+                <span class="kpi-tag cadence">Monthly (once activated)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ENGINE 2 -->
+    <div class="branch">
+      <div class="branch-header e2-head">
+        <div>
+          <div class="branch-label">Engine 2</div>
+          <div class="branch-title">Internal Feedback Loop</div>
+        </div>
+      </div>
+      <div class="branch-body">
+
+        <div class="kpi-group">
+          <div class="kpi-group-label">Signal Volume &amp; Capture</div>
+
+          <div class="kpi-leaf">
+            <div class="kpi-dot" style="background:var(--e2)"></div>
+            <div class="kpi-content">
+              <div class="kpi-name">Feedback Submission Rate</div>
+              <div class="kpi-def">% of active courses with ≥1 internal signal submitted per cohort (IDQA + LEAD + Canvas)</div>
+              <div class="kpi-meta">
+                <span class="kpi-tag target">Target: ≥ 85%</span>
+                <span class="kpi-tag source">Source: Airtable / App</span>
+                <span class="kpi-tag cadence">Per cohort</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="kpi-leaf">
+            <div class="kpi-dot" style="background:var(--e2)"></div>
+            <div class="kpi-content">
+              <div class="kpi-name">Signal Triage SLA (System / Broken)</div>
+              <div class="kpi-def">% of Engine 2 system-level signals (broken links, dev-side issues) triaged within 48 hours. <em>Design / content / curriculum-change signals follow a separate, longer cadence — to be defined in Engine 2 SOP refinement.</em></div>
+              <div class="kpi-meta">
+                <span class="kpi-tag target">Target: 100%</span>
+                <span class="kpi-tag source">Source: Asana log</span>
+                <span class="kpi-tag cadence">Weekly</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="kpi-group">
+          <div class="kpi-group-label">Signal Quality &amp; Action</div>
+
+          <div class="kpi-leaf">
+            <div class="kpi-dot" style="background:var(--e2)"></div>
+            <div class="kpi-content">
+              <div class="kpi-name">Change Criticality Index</div>
+              <div class="kpi-def">Weighted score of accepted signals by severity (Minor / Moderate / Critical) — tracks urgency of backlog</div>
+              <div class="kpi-meta">
+                <span class="kpi-tag target">Watch threshold: &gt;3 Critical open</span>
+                <span class="kpi-tag source">Source: Airtable</span>
+                <span class="kpi-tag cadence">Monthly</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="kpi-leaf">
+            <div class="kpi-dot" style="background:var(--e2)"></div>
+            <div class="kpi-content">
+              <div class="kpi-name">Close-the-Loop Rate</div>
+              <div class="kpi-def">% of accepted signals with a documented response sent back to the originating advisor. <em>Owned by Enterprise Solutions (Laura Standley's team) — Design provides the data they need to close the loop.</em></div>
+              <div class="kpi-meta">
+                <span class="kpi-tag target">Target: 100%</span>
+                <span class="kpi-tag source">Owner: Enterprise Solutions</span>
+                <span class="kpi-tag cadence">Quarterly</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="kpi-leaf">
+            <div class="kpi-dot" style="background:var(--e2)"></div>
+            <div class="kpi-content">
+              <div class="kpi-name">Pattern-Trigger Rate</div>
+              <div class="kpi-def">% of Engine 2 patterns (≥2 cohorts) that result in a Phase 0 refresh intake</div>
+              <div class="kpi-meta">
+                <span class="kpi-tag target">Target: 100% of qualifying patterns</span>
+                <span class="kpi-tag source">Source: Asana + Airtable</span>
+                <span class="kpi-tag cadence">Quarterly</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- PROGRAM HEALTH -->
+    <div class="branch">
+      <div class="branch-header dash-head">
+        <div>
+          <div class="branch-label">Program Health</div>
+          <div class="branch-title">Dashboard &amp; Outcomes</div>
+        </div>
+      </div>
+      <div class="branch-body">
+
+        <div class="kpi-group">
+          <div class="kpi-group-label">Signal-to-Action Conversion</div>
+
+          <div class="kpi-leaf">
+            <div class="kpi-dot" style="background:var(--dash)"></div>
+            <div class="kpi-content">
+              <div class="kpi-name">Signal-to-Refresh Rate</div>
+              <div class="kpi-def">% of accepted signals (E1 + E2 combined) that result in a documented curriculum decision within 90 days</div>
+              <div class="kpi-meta">
+                <span class="kpi-tag target">Target: ≥ 75%</span>
+                <span class="kpi-tag source">Source: Asana decision log</span>
+                <span class="kpi-tag cadence">Quarterly</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="kpi-leaf">
+            <div class="kpi-dot" style="background:var(--dash)"></div>
+            <div class="kpi-content">
+              <div class="kpi-name">Market Validation Coverage</div>
+              <div class="kpi-def">% of net-new or major refreshes with documented DSCA employer validation evidence (SOP gate requirement)</div>
+              <div class="kpi-meta">
+                <span class="kpi-tag target">Target: 100%</span>
+                <span class="kpi-tag source">Source: Asana Phase 2 gate</span>
+                <span class="kpi-tag cadence">Per launch</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="kpi-group">
+          <div class="kpi-group-label">Learner &amp; Placement Outcomes</div>
+
+          <div class="kpi-leaf">
+            <div class="kpi-dot" style="background:var(--dash)"></div>
+            <div class="kpi-content">
+              <div class="kpi-name">Credential Attainment Rate</div>
+              <div class="kpi-def">% of learners in DSCA-validated programs earning the target credential</div>
+              <div class="kpi-meta">
+                <span class="kpi-tag target">Target: ≥ 80% (org KPI)</span>
+                <span class="kpi-tag source">Source: Salesforce</span>
+                <span class="kpi-tag cadence">Per cohort</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="kpi-leaf">
+            <div class="kpi-dot" style="background:var(--dash)"></div>
+            <div class="kpi-content">
+              <div class="kpi-name">Job Attainment Rate (JAR)</div>
+              <div class="kpi-def">% of DSCA-validated program graduates placed in a role within 6 months</div>
+              <div class="kpi-meta">
+                <span class="kpi-tag target">Benchmark: org baseline + trend</span>
+                <span class="kpi-tag source">Source: Salesforce</span>
+                <span class="kpi-tag cadence">Quarterly</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="kpi-group">
+          <div class="kpi-group-label">Program Ops</div>
+
+          <div class="kpi-leaf">
+            <div class="kpi-dot" style="background:var(--dash)"></div>
+            <div class="kpi-content">
+              <div class="kpi-name">Dashboard Live Date</div>
+              <div class="kpi-def">Date a live KPI dashboard is accessible to Bolaji / product team (milestone, not ongoing)</div>
+              <div class="kpi-meta">
+                <span class="kpi-tag target">Target: Day 60 (≈ Jul 6)</span>
+                <span class="kpi-tag source">Source: Airtable / TBD</span>
+                <span class="kpi-tag cadence">One-time</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <div class="timeline-row">
+    <div class="timeline-header">📅 &nbsp; Delivery Milestones</div>
+    <div class="timeline-body">
+      <div class="milestone">
+        <div class="milestone-date">Day 30 · ≈ Jun 6</div>
+        <div class="milestone-label">KPI Tree Approved</div>
+        <div class="milestone-detail">This document reviewed + locked with Bolaji. Metric definitions, targets, and data sources confirmed. Airtable sandbox access verified.</div>
+      </div>
+      <div class="milestone milestone-divider">
+        <div class="milestone-date">Day 60 · ≈ Jul 6</div>
+        <div class="milestone-label">Dashboard Live</div>
+        <div class="milestone-detail">Working KPI dashboard accessible in Airtable (or confirmed alternate platform, pending Engine 2 architecture decision). First data visible.</div>
+      </div>
+      <div class="milestone milestone-divider">
+        <div class="milestone-date">Day 75 · ≈ Jul 21</div>
+        <div class="milestone-label">First KPI Readout</div>
+        <div class="milestone-detail">First data-populated readout to Bolaji + Aishwarya. Baseline set. Engine 2 architecture recommendation finalized. Sep 30 org launch on track.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="notes-row">
+    <div class="note-box">
+      <h4>Open Decisions (Required Before Day 60)</h4>
+      <ul>
+        <li><strong>Engine 1 scope this year:</strong> Stay Macro across all market-driven products and defer Micro to 2027? Recommendation in flight — aligning with Laura Standley (Enterprise Solutions).</li>
+        <li><strong>Engine 2 architecture:</strong> Airtable vs. Shahparan's internal app vs. fold-together. Viktor owns framing after discovery call with Shahparan; technical eval routes to Shahparan + Kayla.</li>
+        <li><strong>Signal Triage SLA split:</strong> Separate cadence for system/broken signals (48h, dev team) vs. design/content signals (longer, owned by Design team). To be defined in Engine 2 SOP refinement.</li>
+        <li><strong>Dashboard platform:</strong> Bolaji has begun building dashboard views in Airtable (à la carte input, focus group findings, filtered-by-product view). Integration vs. consolidation TBD.</li>
+        <li><strong>Baseline data pull:</strong> Salesforce access confirmed. First pull needed to set credential attainment and JAR baselines.</li>
+      </ul>
+    </div>
+    <div class="note-box">
+      <h4>Data Source &amp; Ownership Map</h4>
+      <ul>
+        <li><strong>Airtable:</strong> DSCA signal log, advisor tracking, à la carte and focus group inputs, gate status, synthesis briefs</li>
+        <li><strong>Salesforce:</strong> JAR, credential attainment, cohort completion, employer satisfaction</li>
+        <li><strong>Asana:</strong> Decision log, triage SLA tracking, Phase 2 gate evidence</li>
+        <li><strong>Enterprise Solutions (Laura Standley team):</strong> Advisor outreach, survey distribution, close-the-loop with advisors</li>
+        <li><strong>DSCA Session Surveys:</strong> NPS, Alignment Score (E1); per-cycle cadence</li>
+        <li><strong>Canvas:</strong> Help desk feedback volume (Engine 2 input, not output KPI)</li>
+        <li><strong>Primary signal source:</strong> Employer partners + LMI (Engine 1). Internal stakeholders (Engine 2) validate and shift the signal.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>DSCA KPI Tree · v1 · Per Scholas Curriculum Solutions · Internal Use Only</span>
+    <span>Viktor Shumylo · Director, Strategic Programs · June 2026</span>
+  </div>
+
 </div>
 
-<!-- LEGEND -->
-<div class="legend">
-  <div class="legend-item"><div class="legend-dot" style="background:var(--e1)"></div> Engine 1 — External Market Signal</div>
-  <div class="legend-item"><div class="legend-dot" style="background:var(--e2)"></div> Engine 2 — Internal Feedback Loop</div>
-  <div class="legend-item"><div class="legend-dot" style="background:var(--dash)"></div> Program Health &amp; Dashboard</div>
+
+<!-- TAB 2 — SYSTEM MAP -->
+<div id="sysmap" class="tab-panel">
+
+  <div class="header">
+    <div class="header-left">
+      <h1>DSCA System Map — v1</h1>
+      <div class="subtitle">How the system works · Dependencies · Tools we operate in</div>
+    </div>
+    <div class="header-right">
+      Per Scholas | Curriculum Solutions<br>
+      Owner: Viktor Shumylo, Director, Strategic Programs<br>
+      Companion to: DSCA KPI Tree v1<br>
+      Status: v1 · June 2026
+    </div>
+  </div>
+
+  <div class="trunk">
+    <div class="trunk-icon">🎯</div>
+    <div class="trunk-text">
+      <h2>DSCA turns employer + delivery signal into curriculum decisions, with a paper trail.</h2>
+      <p>One closed loop. Two engines feed it. Airtable is the system of record. Engine 1 captures what the market wants <em>before</em> we build. Engine 2 captures what's actually happening <em>after</em> we launch. Together they govern every curriculum change.</p>
+    </div>
+  </div>
+
+  <div class="arrow-down"></div>
+
+  <div class="section-title">The Two Engines</div>
+  <div class="engines">
+
+    <div class="engine">
+      <div class="engine-head e1">
+        <div class="tag">Engine 1 · External</div>
+        <div class="name">DSCA — Employer Intelligence</div>
+      </div>
+      <div class="engine-body">
+        <div class="engine-tagline">What employers want — before we build.</div>
+        <div class="row"><strong>Captures</strong><span>Employer demand, role direction, skill gaps, certification fit</span></div>
+        <div class="row"><strong>From</strong><span>Type 1 (Executive), Type 2 (Hiring Mgr), Type 3 (Practitioner) advisors</span></div>
+        <div class="row"><strong>How</strong><span>Surveys (Lane A Outline / Lane B Micro) + focus groups + JTA sessions</span></div>
+        <div class="row"><strong>Cadence</strong><span>Annual — Feb 1 surveys open · May 15 G5 cutoff (hard)</span></div>
+        <div class="row"><strong>Status</strong><span>~50% built · Macro done for Cyber + Critical Facilities · Micro to build</span></div>
+        <div class="gate-strip">
+          <div class="gate">G0 Intake</div>
+          <div class="gate">G1 Survey</div>
+          <div class="gate">G2 Session</div>
+          <div class="gate">G3 Analysis</div>
+          <div class="gate">G4 Brief</div>
+          <div class="gate">G5 Decision</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="engine-connector">
+      <div class="connector-arrow">→</div>
+      <div class="connector-label">G4→G5<br>handoff</div>
+      <div class="connector-arrow">→</div>
+    </div>
+
+    <div class="engine">
+      <div class="engine-head e2">
+        <div class="tag">Engine 2 · Internal</div>
+        <div class="name">IFF — Delivery Reality</div>
+      </div>
+      <div class="engine-body">
+        <div class="engine-tagline">What's actually happening — after we launch.</div>
+        <div class="row"><strong>Captures</strong><span>Instructor obs · learner data · assessment results · LMS/ops friction</span></div>
+        <div class="row"><strong>From</strong><span>Instructors, IDQA, Dev, Design, learners (PCRA + NPS + retros)</span></div>
+        <div class="row"><strong>How</strong><span>Weekly triage · Monthly PMT Roundtable · Decision Log · Release plan</span></div>
+        <div class="row"><strong>Cadence</strong><span>Continuous · every cohort · P0 same-day, P1 2 weeks</span></div>
+        <div class="row"><strong>Status</strong><span>SOP drafted · NOT operationalized · ~3-month build · Launch Sep 30</span></div>
+        <div class="gate-strip">
+          <div class="gate gate-e2">Intake</div>
+          <div class="gate gate-e2">Triage</div>
+          <div class="gate gate-e2">Feasibility</div>
+          <div class="gate gate-e2">Decision Log</div>
+          <div class="gate gate-e2">Release</div>
+          <div class="gate gate-e2">Close Loop</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="decision-card">
+    <h4>⚠ Open Strategic Decision — Engine 2 Architecture (June 3)</h4>
+    <div class="question">Does Engine 2 live in Airtable, in Shahparan's app, or do we fold Airtable into it?</div>
+    <div class="body">
+      Shahparan Hasnat (SWE) already built an internal feedback-gathering application capturing curriculum feedback. All three paths are possible. <strong>Viktor owns framing the recommendation. Technical eval routes to Shahparan + Kayla.</strong> This blocks the Day 60 dashboard milestone if unresolved.
+    </div>
+  </div>
+
+  <div class="section-title">Who We Depend On (and What They Own)</div>
+  <div class="dep-block">
+    <div class="dep-row">
+      <div class="dep-name">Aishwarya</div>
+      <div class="dep-detail">Governs the DSCA framework end-to-end. Holds product approval. Viktor is Accountable for execution; she is Accountable for the framework.</div>
+      <div class="dep-owns">Framework owner</div>
+    </div>
+    <div class="dep-row">
+      <div class="dep-name">Bolaji Saibu</div>
+      <div class="dep-detail">VP, Product Strategy &amp; Innovation. Informed (was Accountable through May 27). Brand-integrity escalation path. Reviews KPI tree + dashboard.</div>
+      <div class="dep-owns">Exec sponsor</div>
+    </div>
+    <div class="dep-row">
+      <div class="dep-name">Sylvia Mitchell (EVP)</div>
+      <div class="dep-detail">G5 decision authority. P0 escalation. Override authority on G5 recommendations.</div>
+      <div class="dep-owns">Final decisions</div>
+    </div>
+    <div class="dep-row">
+      <div class="dep-name">LMI — Dr. Emily Finchum-Mason</div>
+      <div class="dep-detail">Owns survey instruments + quantitative analysis. POs cannot modify survey questions. Delivers scored data post-G3. JTA co-facilitator.</div>
+      <div class="dep-owns">Instruments + data</div>
+    </div>
+    <div class="dep-row">
+      <div class="dep-name">Enterprise Solutions — Laura Standley</div>
+      <div class="dep-detail">Phase 2: advisor pool building, outreach, screening, survey distribution, close-the-loop comms back to advisors. Escalation path for conflict-of-interest flags.</div>
+      <div class="dep-owns">Advisor pool</div>
+    </div>
+    <div class="dep-row">
+      <div class="dep-name">PMT (Product Mgmt Team)</div>
+      <div class="dep-detail">G5 curriculum decisions. Monthly Domain Roundtable. Authorizes Major Updates. Approves Feasibility Gate.</div>
+      <div class="dep-owns">Curriculum calls</div>
+    </div>
+    <div class="dep-row">
+      <div class="dep-name">IDQA + LEAD + Sr. Director PM</div>
+      <div class="dep-detail">Engine 2 stakeholders. Need alignment before SOP rework → buy-in → change management. Provide instructional integrity + delivery signal.</div>
+      <div class="dep-owns">Engine 2 buy-in</div>
+    </div>
+    <div class="dep-row">
+      <div class="dep-name">Shahparan Hasnat (SWE)</div>
+      <div class="dep-detail">Built an internal feedback app already capturing curriculum feedback. Holds the technical input on Engine 2 architecture decision.</div>
+      <div class="dep-owns">Tech eval</div>
+    </div>
+    <div class="dep-row">
+      <div class="dep-name">Keyla Centeno Diaz</div>
+      <div class="dep-detail">POC for the Engine 1 Micro build (course/skill/competency capture).</div>
+      <div class="dep-owns">Engine 1 Micro</div>
+    </div>
+    <div class="dep-row">
+      <div class="dep-name">Talent Solutions</div>
+      <div class="dep-detail">Manages NDA for all advisor materials. All CA participants operate under NDA.</div>
+      <div class="dep-owns">NDA / compliance</div>
+    </div>
+  </div>
+
+  <div class="section-title">Systems We Operate In</div>
+  <div class="grid-3">
+    <div class="system-card sor">
+      <div class="name">Airtable — System of Record</div>
+      <div class="role">Single source of truth. Intake → recommendations → decisions → implementation tracking. "If it's not in Airtable, it didn't happen." Holds: DSCA Intake, Advisor Pool, Survey Tracker, Session Log, Scoring Layer, G5 Decision Log, Close-the-Loop Tracker, IFF Feedback Tracker, PCRA Results, NPS Log, Retros, Course Version Registry, KPI Dashboard.</div>
+    </div>
+    <div class="system-card">
+      <div class="name">Salesforce</div>
+      <div class="role">Outcomes layer. Job Attainment Rate (JAR), credential attainment, cohort completion, employer satisfaction. Source for placement and outcome KPIs.</div>
+    </div>
+    <div class="system-card">
+      <div class="name">Asana</div>
+      <div class="role">Work tracking + decision-log tracking + Phase 2 gate evidence + triage SLA tracking. Engine 2 release work breakdown lives here.</div>
+    </div>
+    <div class="system-card">
+      <div class="name">Canvas</div>
+      <div class="role">Engine 2 intake form for instructor/learner feedback (required fields). Help-desk feedback volume. Input to triage queue, not output KPI.</div>
+    </div>
+    <div class="system-card">
+      <div class="name">DSCA Session Surveys</div>
+      <div class="role">Post-session NPS, Alignment Score (Engine 1). Per-cycle cadence. Feeds Advisor NPS and engagement KPIs.</div>
+    </div>
+    <div class="system-card">
+      <div class="name">Google Gemini Notetaker</div>
+      <div class="role">Required notetaker for every advisory session. Session cannot run without one. Notes uploaded to Airtable within 48h.</div>
+    </div>
+  </div>
+
+  <div class="section-title">My Four Buckets (Where Work Lives)</div>
+  <div class="grid-4">
+    <div class="card">
+      <div class="card-label">Bucket 1</div>
+      <div class="card-title">Extend Engine 1 Macro</div>
+      <div class="card-detail">Unify all three channels — employer focus groups, surveys, à la carte — into one Airtable SOR.</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Bucket 2</div>
+      <div class="card-title">Build Engine 1 Micro</div>
+      <div class="card-detail">Course/skill/competency capture. POC: Keyla Centeno Diaz.</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Bucket 3</div>
+      <div class="card-title">Launch Engine 2</div>
+      <div class="card-detail">Stakeholder alignment (IDQA, LEAD, Sr Dir PM, Aishwarya) → SOP rework → buy-in → change mgmt → <strong>Sep 30 launch</strong>.</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Bucket 4</div>
+      <div class="card-title">KPI Framework</div>
+      <div class="card-detail">Tree D30 ✓ · Dashboard D60 (~Jul 6) · First readout D75 (~Jul 21).</div>
+    </div>
+  </div>
+
+  <div class="status-row">
+    <div style="font-family: 'DM Serif Display', serif; font-size: 15px; color: var(--ps-navy); margin-bottom: 4px;">Where We Are Right Now</div>
+    <div class="status-grid">
+      <div class="status-item">
+        <div class="status-label">Engine 1</div>
+        <div class="status-value">~50% built</div>
+        <div class="status-detail">Macro: Cyber + Critical Facilities done. Micro: not started.</div>
+      </div>
+      <div class="status-item amber">
+        <div class="status-label">Engine 2</div>
+        <div class="status-value">SOP drafted, not live</div>
+        <div class="status-detail">~3 months of work. Org launch 2026-09-30. First full cycle 2026-12-31.</div>
+      </div>
+      <div class="status-item violet">
+        <div class="status-label">KPI Dashboard</div>
+        <div class="status-value">Tree v1 in flight</div>
+        <div class="status-detail">Dashboard live target: ≈ Jul 6. First readout: ≈ Jul 21.</div>
+      </div>
+      <div class="status-item red">
+        <div class="status-label">Blocker</div>
+        <div class="status-value">Engine 2 architecture</div>
+        <div class="status-detail">Airtable vs. Shahparan's app vs. fold-together. Must resolve before Day 60.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>DSCA System Map · v1 · Per Scholas Curriculum Solutions · Internal Use Only</span>
+    <span>Viktor Shumylo · Director, Strategic Programs · June 2026</span>
+  </div>
+
 </div>
 
-<!-- TRUNK -->
-<div class="trunk">
-  <div class="trunk-icon">🎯</div>
-  <div class="trunk-text">
-    <h2>DSCA Program Goal: Employer-validated curriculum that drives measurable learner outcomes and labor-market placement</h2>
-    <p>Signal → Curriculum Decision → Delivery → Outcome. Both engines required. Neither dominates.</p>
-  </div>
-</div>
-<div class="connector"></div>
-
-<!-- BRANCH ROW -->
-<div class="branch-row">
-
-  <!-- ENGINE 1 -->
-  <div class="branch">
-    <div class="branch-header e1-head">
-      <div>
-        <div class="branch-label">Engine 1</div>
-        <div class="branch-title">External Market Signal</div>
-      </div>
-    </div>
-    <div class="branch-body">
-
-      <div class="kpi-group">
-        <div class="kpi-group-label">Employer Engagement</div>
-
-        <div class="kpi-leaf">
-          <div class="kpi-dot" style="background:var(--e1)"></div>
-          <div class="kpi-content">
-            <div class="kpi-name">Advisor NPS</div>
-            <div class="kpi-def">Net Promoter Score from DSCA employer advisors post-session</div>
-            <div class="kpi-meta">
-              <span class="kpi-tag target">Target: ≥ 70</span>
-              <span class="kpi-tag source">Source: DSCA survey</span>
-              <span class="kpi-tag cadence">Per cycle</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="kpi-leaf">
-          <div class="kpi-dot" style="background:var(--e1)"></div>
-          <div class="kpi-content">
-            <div class="kpi-name">Advisor Participation Rate</div>
-            <div class="kpi-def">% of invited advisors who complete a session in the period</div>
-            <div class="kpi-meta">
-              <span class="kpi-tag target">Target: ≥ 80%</span>
-              <span class="kpi-tag source">Source: Airtable</span>
-              <span class="kpi-tag cadence">Quarterly</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="kpi-leaf">
-          <div class="kpi-dot" style="background:var(--e1)"></div>
-          <div class="kpi-content">
-            <div class="kpi-name">Macro Coverage</div>
-            <div class="kpi-def">% of active domains with ≥1 completed Macro advisor session</div>
-            <div class="kpi-meta">
-              <span class="kpi-tag target">Target: 100% by Q3</span>
-              <span class="kpi-tag source">Source: Airtable</span>
-              <span class="kpi-tag cadence">Monthly</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="kpi-group">
-        <div class="kpi-group-label">Signal Alignment</div>
-
-        <div class="kpi-leaf">
-          <div class="kpi-dot" style="background:var(--e1)"></div>
-          <div class="kpi-content">
-            <div class="kpi-name">Curriculum Alignment Score</div>
-            <div class="kpi-def">Advisor-rated match between current curriculum and employer skill needs (1–5 scale)</div>
-            <div class="kpi-meta">
-              <span class="kpi-tag target">Target: ≥ 4.0</span>
-              <span class="kpi-tag source">Source: DSCA session</span>
-              <span class="kpi-tag cadence">Per cycle</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="kpi-leaf">
-          <div class="kpi-dot" style="background:var(--e1)"></div>
-          <div class="kpi-content">
-            <div class="kpi-name">Micro Coverage</div>
-            <div class="kpi-def">% of target courses with completed Micro (skill/competency-level) advisor capture. <em>Scope decision pending Enterprise Solutions alignment — recommendation is to focus on Macro across all market-driven products this year and re-introduce Micro in 2027.</em></div>
-            <div class="kpi-meta">
-              <span class="kpi-tag target">Target: TBC after Laura Standley alignment</span>
-              <span class="kpi-tag source">Source: Airtable</span>
-              <span class="kpi-tag cadence">Monthly (once activated)</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- ENGINE 2 -->
-  <div class="branch">
-    <div class="branch-header e2-head">
-      <div>
-        <div class="branch-label">Engine 2</div>
-        <div class="branch-title">Internal Feedback Loop</div>
-      </div>
-    </div>
-    <div class="branch-body">
-
-      <div class="kpi-group">
-        <div class="kpi-group-label">Signal Volume &amp; Capture</div>
-
-        <div class="kpi-leaf">
-          <div class="kpi-dot" style="background:var(--e2)"></div>
-          <div class="kpi-content">
-            <div class="kpi-name">Feedback Submission Rate</div>
-            <div class="kpi-def">% of active courses with ≥1 internal signal submitted per cohort (IDQA + LEAD + Canvas)</div>
-            <div class="kpi-meta">
-              <span class="kpi-tag target">Target: ≥ 85%</span>
-              <span class="kpi-tag source">Source: Airtable / App</span>
-              <span class="kpi-tag cadence">Per cohort</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="kpi-leaf">
-          <div class="kpi-dot" style="background:var(--e2)"></div>
-          <div class="kpi-content">
-            <div class="kpi-name">Signal Triage SLA (System / Broken)</div>
-            <div class="kpi-def">% of Engine 2 system-level signals (broken links, dev-side issues) triaged within 48 hours. <em>Design / content / curriculum-change signals follow a separate, longer cadence — to be defined in Engine 2 SOP refinement.</em></div>
-            <div class="kpi-meta">
-              <span class="kpi-tag target">Target: 100%</span>
-              <span class="kpi-tag source">Source: Asana log</span>
-              <span class="kpi-tag cadence">Weekly</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="kpi-group">
-        <div class="kpi-group-label">Signal Quality &amp; Action</div>
-
-        <div class="kpi-leaf">
-          <div class="kpi-dot" style="background:var(--e2)"></div>
-          <div class="kpi-content">
-            <div class="kpi-name">Change Criticality Index</div>
-            <div class="kpi-def">Weighted score of accepted signals by severity (Minor / Moderate / Critical) — tracks urgency of backlog</div>
-            <div class="kpi-meta">
-              <span class="kpi-tag target">Watch threshold: &gt;3 Critical open</span>
-              <span class="kpi-tag source">Source: Airtable</span>
-              <span class="kpi-tag cadence">Monthly</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="kpi-leaf">
-          <div class="kpi-dot" style="background:var(--e2)"></div>
-          <div class="kpi-content">
-            <div class="kpi-name">Close-the-Loop Rate</div>
-            <div class="kpi-def">% of accepted signals with a documented response sent back to the originating advisor. <em>Owned by Enterprise Solutions (Laura Standley's team) — Design provides the data they need to close the loop.</em></div>
-            <div class="kpi-meta">
-              <span class="kpi-tag target">Target: 100%</span>
-              <span class="kpi-tag source">Owner: Enterprise Solutions</span>
-              <span class="kpi-tag cadence">Quarterly</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="kpi-leaf">
-          <div class="kpi-dot" style="background:var(--e2)"></div>
-          <div class="kpi-content">
-            <div class="kpi-name">Pattern-Trigger Rate</div>
-            <div class="kpi-def">% of Engine 2 patterns (≥2 cohorts) that result in a Phase 0 refresh intake</div>
-            <div class="kpi-meta">
-              <span class="kpi-tag target">Target: 100% of qualifying patterns</span>
-              <span class="kpi-tag source">Source: Asana + Airtable</span>
-              <span class="kpi-tag cadence">Quarterly</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- PROGRAM HEALTH & DASHBOARD -->
-  <div class="branch">
-    <div class="branch-header dash-head">
-      <div>
-        <div class="branch-label">Program Health</div>
-        <div class="branch-title">Dashboard &amp; Outcomes</div>
-      </div>
-    </div>
-    <div class="branch-body">
-
-      <div class="kpi-group">
-        <div class="kpi-group-label">Signal-to-Action Conversion</div>
-
-        <div class="kpi-leaf">
-          <div class="kpi-dot" style="background:var(--dash)"></div>
-          <div class="kpi-content">
-            <div class="kpi-name">Signal-to-Refresh Rate</div>
-            <div class="kpi-def">% of accepted signals (E1 + E2 combined) that result in a documented curriculum decision within 90 days</div>
-            <div class="kpi-meta">
-              <span class="kpi-tag target">Target: ≥ 75%</span>
-              <span class="kpi-tag source">Source: Asana decision log</span>
-              <span class="kpi-tag cadence">Quarterly</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="kpi-leaf">
-          <div class="kpi-dot" style="background:var(--dash)"></div>
-          <div class="kpi-content">
-            <div class="kpi-name">Market Validation Coverage</div>
-            <div class="kpi-def">% of net-new or major refreshes with documented DSCA employer validation evidence (SOP gate requirement)</div>
-            <div class="kpi-meta">
-              <span class="kpi-tag target">Target: 100%</span>
-              <span class="kpi-tag source">Source: Asana Phase 2 gate</span>
-              <span class="kpi-tag cadence">Per launch</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="kpi-group">
-        <div class="kpi-group-label">Learner &amp; Placement Outcomes</div>
-
-        <div class="kpi-leaf">
-          <div class="kpi-dot" style="background:var(--dash)"></div>
-          <div class="kpi-content">
-            <div class="kpi-name">Credential Attainment Rate</div>
-            <div class="kpi-def">% of learners in DSCA-validated programs earning the target credential</div>
-            <div class="kpi-meta">
-              <span class="kpi-tag target">Target: ≥ 80% (org KPI)</span>
-              <span class="kpi-tag source">Source: Salesforce</span>
-              <span class="kpi-tag cadence">Per cohort</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="kpi-leaf">
-          <div class="kpi-dot" style="background:var(--dash)"></div>
-          <div class="kpi-content">
-            <div class="kpi-name">Job Attainment Rate (JAR)</div>
-            <div class="kpi-def">% of DSCA-validated program graduates placed in a role within 6 months</div>
-            <div class="kpi-meta">
-              <span class="kpi-tag target">Benchmark: org baseline + trend</span>
-              <span class="kpi-tag source">Source: Salesforce</span>
-              <span class="kpi-tag cadence">Quarterly</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="kpi-group">
-        <div class="kpi-group-label">Program Ops</div>
-
-        <div class="kpi-leaf">
-          <div class="kpi-dot" style="background:var(--dash)"></div>
-          <div class="kpi-content">
-            <div class="kpi-name">Dashboard Live Date</div>
-            <div class="kpi-def">Date a live KPI dashboard is accessible to Bolaji / product team (milestone, not ongoing)</div>
-            <div class="kpi-meta">
-              <span class="kpi-tag target">Target: Day 60 (≈ Jul 6)</span>
-              <span class="kpi-tag source">Source: Airtable / TBD</span>
-              <span class="kpi-tag cadence">One-time</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-</div><!-- /branch-row -->
-
-<!-- TIMELINE -->
-<div class="timeline-row">
-  <div class="timeline-header">📅 &nbsp; Delivery Milestones</div>
-  <div class="timeline-body">
-    <div class="milestone">
-      <div class="milestone-date">Day 30 · ≈ Jun 6</div>
-      <div class="milestone-label">KPI Tree Approved</div>
-      <div class="milestone-detail">This document reviewed + locked with Bolaji. Metric definitions, targets, and data sources confirmed. Airtable sandbox access verified.</div>
-    </div>
-    <div class="milestone milestone-divider">
-      <div class="milestone-date">Day 60 · ≈ Jul 6</div>
-      <div class="milestone-label">Dashboard Live</div>
-      <div class="milestone-detail">Working KPI dashboard accessible in Airtable (or confirmed alternate platform, pending Engine 2 architecture decision). First data visible.</div>
-    </div>
-    <div class="milestone milestone-divider">
-      <div class="milestone-date">Day 75 · ≈ Jul 21</div>
-      <div class="milestone-label">First KPI Readout</div>
-      <div class="milestone-detail">First data-populated readout to Bolaji + Aishwarya. Baseline set. Engine 2 architecture recommendation finalized. Sep 30 org launch on track.</div>
-    </div>
-  </div>
-</div>
-
-<!-- NOTES -->
-<div class="notes-row">
-  <div class="note-box">
-    <h4>Open Decisions (Required Before Day 60)</h4>
-    <ul>
-      <li><strong>Engine 1 scope this year:</strong> Stay Macro across all market-driven products and defer Micro to 2027? Recommendation in flight — aligning with Laura Standley (Enterprise Solutions).</li>
-      <li><strong>Engine 2 architecture:</strong> Airtable vs. Shahparan's internal app vs. fold-together. Viktor owns framing after discovery call with Shahparan; technical eval routes to Shahparan + Kayla.</li>
-      <li><strong>Signal Triage SLA split:</strong> Separate cadence for system/broken signals (48h, dev team) vs. design/content signals (longer, owned by Design team). To be defined in Engine 2 SOP refinement.</li>
-      <li><strong>Dashboard platform:</strong> Bolaji has begun building dashboard views in Airtable (à la carte input, focus group findings, filtered-by-product view). Integration vs. consolidation TBD.</li>
-      <li><strong>Baseline data pull:</strong> Salesforce access confirmed. First pull needed to set credential attainment and JAR baselines.</li>
-    </ul>
-  </div>
-  <div class="note-box">
-    <h4>Data Source &amp; Ownership Map</h4>
-    <ul>
-      <li><strong>Airtable:</strong> DSCA signal log, advisor tracking, à la carte and focus group inputs, gate status, synthesis briefs</li>
-      <li><strong>Salesforce:</strong> JAR, credential attainment, cohort completion, employer satisfaction</li>
-      <li><strong>Asana:</strong> Decision log, triage SLA tracking, Phase 2 gate evidence</li>
-      <li><strong>Enterprise Solutions (Laura Standley team):</strong> Advisor outreach, survey distribution, close-the-loop with advisors</li>
-      <li><strong>DSCA Session Surveys:</strong> NPS, Alignment Score (E1); per-cycle cadence</li>
-      <li><strong>Canvas:</strong> Help desk feedback volume (Engine 2 input, not output KPI)</li>
-      <li><strong>Primary signal source:</strong> Employer partners + LMI (Engine 1). Internal stakeholders (Engine 2) validate and shift the signal.</li>
-    </ul>
-  </div>
-</div>
-
-<!-- FOOTER -->
-<div class="footer">
-  <span>DSCA KPI Tree · v1 · Per Scholas Curriculum Solutions · Internal Use Only</span>
-  <span>Viktor Shumylo · Director, Strategic Programs · June 2026</span>
-</div>
-
+<script>
+  function switchTab(id, btn) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+  }
+</script>
 </body>
 </html>
