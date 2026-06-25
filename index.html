@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DSCA — Per Scholas</title>
+<title>DSCA Hub — Per Scholas</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700&display=swap');
 
@@ -879,6 +879,217 @@
   .convergence h3 { font-size: 17px; color: var(--ps-navy); font-weight: 700; margin-bottom: 6px; }
   .convergence p { font-size: 13.5px; color: var(--ps-slate); line-height: 1.6; }
 
+  /* ─── KPI tracking links + notes (v2) ─── */
+  .kpi-note {
+    font-size: 11px;
+    color: var(--muted);
+    font-style: italic;
+    margin-top: 6px;
+    padding-left: 10px;
+    border-left: 2px solid var(--ps-border);
+    line-height: 1.5;
+  }
+  .kpi-track {
+    margin-top: 6px;
+    font-size: 11px;
+  }
+  .track-label {
+    color: var(--muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    margin-right: 4px;
+  }
+  .kpi-track a {
+    color: var(--ps-teal);
+    text-decoration: none;
+    font-weight: 600;
+    border-bottom: 1px dotted var(--ps-teal);
+  }
+  .kpi-track a:hover { color: var(--ps-navy); }
+  .kpi-track.pending {
+    color: var(--ps-orange);
+    font-weight: 600;
+    font-style: italic;
+  }
+  .kpi-track.pending .track-label { color: var(--ps-orange); }
+
+  /* ─── SF audience cards (v2) ─── */
+  .sf-audience-block h2 { color: var(--ps-navy) !important; }
+  .sf-audience-block p { color: var(--ps-slate) !important; }
+  .sf-audiences {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-top: 14px;
+  }
+  .aud-card {
+    background: #fff;
+    border: 1px solid var(--ps-border);
+    border-radius: 8px;
+    padding: 12px 14px;
+  }
+  .aud-card strong { display: block; font-size: 12.5px; color: var(--ps-navy); margin-bottom: 4px; }
+  .aud-card span { font-size: 11px; color: var(--ps-slate); line-height: 1.45; }
+
+  /* ─── EVIDENCE TRACE PAGE (v2) ─── */
+  #evidence .et-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 28px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid var(--ps-orange);
+  }
+  #evidence .et-header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 26px;
+    color: var(--ps-navy);
+    letter-spacing: -0.3px;
+    margin-bottom: 4px;
+  }
+  #evidence .et-header .subtitle {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  #evidence .et-header-right {
+    text-align: right;
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+  #evidence .et-header-right strong { color: var(--ps-navy); display: block; font-size: 12px; }
+  .et-intro {
+    background: linear-gradient(135deg, #FFF8F3 0%, #fff 100%);
+    border: 1px solid var(--ps-border);
+    border-left: 4px solid var(--ps-orange);
+    border-radius: 10px;
+    padding: 22px 26px;
+    margin-bottom: 28px;
+  }
+  .et-intro h2 { font-size: 16px; color: var(--ps-navy); margin-bottom: 8px; font-weight: 700; }
+  .et-intro p { font-size: 13px; color: var(--ps-slate); line-height: 1.65; margin-bottom: 8px; }
+  .et-intro p:last-child { margin-bottom: 0; }
+  .et-endorse {
+    display: inline-block;
+    margin-top: 10px;
+    background: #E6F7F5;
+    color: #00756E;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 20px;
+  }
+  .et-chain {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin-bottom: 32px;
+    flex-wrap: nowrap;
+  }
+  .et-col {
+    flex: 1;
+    background: #fff;
+    border: 1px solid var(--ps-border);
+    border-radius: 10px;
+    padding: 20px;
+    position: relative;
+  }
+  .et-col-num {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    color: #fff;
+    font-weight: 700;
+    font-size: 13px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 12px;
+  }
+  .et-col.c1 { border-top: 3px solid var(--e1); }
+  .et-col.c1 .et-col-num { background: var(--e1); }
+  .et-col.c2 { border-top: 3px solid var(--dash); }
+  .et-col.c2 .et-col-num { background: var(--dash); }
+  .et-col.c3 { border-top: 3px solid var(--ps-orange); }
+  .et-col.c3 .et-col-num { background: var(--ps-orange); }
+  .et-col h3 { font-size: 14px; color: var(--ps-navy); margin-bottom: 8px; font-weight: 700; }
+  .et-col p { font-size: 12px; color: var(--ps-slate); line-height: 1.6; }
+  .et-col .et-example {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px dashed var(--ps-border);
+    font-size: 11.5px;
+    color: var(--muted);
+    font-style: italic;
+  }
+  .et-connector {
+    display: flex;
+    align-items: center;
+    padding: 0 4px;
+    color: var(--ps-orange);
+    font-size: 20px;
+    font-weight: 700;
+  }
+  .et-cta {
+    background: var(--ps-navy);
+    border-radius: 12px;
+    padding: 28px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 28px;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .et-cta-text h3 { color: #fff; font-size: 17px; margin-bottom: 6px; font-weight: 700; }
+  .et-cta-text p { color: rgba(255,255,255,0.75); font-size: 12.5px; line-height: 1.6; max-width: 600px; }
+  .et-btn {
+    background: var(--ps-orange);
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 14px 26px;
+    border-radius: 8px;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background 0.15s, transform 0.1s;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .et-btn:hover { background: #d96a18; transform: translateY(-1px); }
+  .et-btn.secondary {
+    background: transparent;
+    border: 1.5px solid rgba(255,255,255,0.4);
+  }
+  .et-btn.secondary:hover { background: rgba(255,255,255,0.1); }
+  .et-btn-row { display: flex; gap: 12px; flex-wrap: wrap; }
+  .et-status-note {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+    margin-top: 10px;
+    font-style: italic;
+  }
+  .et-how {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .et-how-card {
+    background: var(--ps-light);
+    border: 1px solid var(--ps-border);
+    border-radius: 10px;
+    padding: 18px 20px;
+  }
+  .et-how-card h4 { font-size: 13px; color: var(--ps-navy); margin-bottom: 8px; font-weight: 700; }
+  .et-how-card ul { margin: 0; padding-left: 18px; }
+  .et-how-card li { font-size: 12px; color: var(--ps-slate); line-height: 1.6; margin-bottom: 5px; }
+
   @media print {
     .tab-nav { display: none; }
     .tab-panel { display: block !important; padding: 24px; background: #fff; }
@@ -893,6 +1104,7 @@
   <button class="tab-btn active" onclick="switchTab('kpi', this)">DSCA KPI Tree</button>
   <button class="tab-btn" onclick="switchTab('sysmap', this)">DSCA System Map</button>
   <button class="tab-btn" onclick="switchTab('signalflow', this)">Signal-to-Decision Flow</button>
+  <button class="tab-btn" onclick="switchTab('evidence', this)">DSCA Evidence Trace</button>
 </nav>
 
 
@@ -908,7 +1120,7 @@
     </div>
     <div class="header-right">
       Per Scholas | Curriculum Solutions<br>
-      Owner: Viktor Shumylo, Director, Strategic Programs<br>
+      Owner: Viktor Shumylo, Director, Product Strategy & Programs<br>
       Reviewed with: Bolaji Saibu, VP, Product Strategy &amp; Innovation<br>
       Status: v1 · Signed off Jun 9 · Bolaji Saibu
     </div>
@@ -954,6 +1166,8 @@
                 <span class="kpi-tag source">Source: DSCA survey</span>
                 <span class="kpi-tag cadence">Per cycle</span>
               </div>
+              <div class="kpi-note">Not yet collected. Proposed mechanism: a short end-of-cycle survey (one rating question + comment) run by Enterprise Solutions, who own the advisor relationship. To confirm with Laura's team whether this is standalone or folded into a broader advisor-experience survey.</div>
+              <div class="kpi-track pending"><span class="track-label">Will live in:</span> <a href="https://drive.google.com/drive/folders/1NOUE_mvRnTO3KncbTvcKkzcPM4HSILDf" target="_blank">DSCA — Measurement &amp; Evidence (Drive)</a> — survey under development</div>
             </div>
           </div>
 
@@ -963,10 +1177,12 @@
               <div class="kpi-name">Advisor Participation Rate</div>
               <div class="kpi-def">% of invited advisors who complete a session in the period</div>
               <div class="kpi-meta">
-                <span class="kpi-tag target">Target: ≥ 80%</span>
+                <span class="kpi-tag target">Target: ≥ 70%</span>
                 <span class="kpi-tag source">Source: Airtable</span>
                 <span class="kpi-tag cadence">Quarterly</span>
               </div>
+              <div class="kpi-note">Calibrated to the Employer Curriculum Advisory Boards charter (Enterprise Solutions). Aligned with Laura Standley's team; confirmed with Bolaji Saibu, Jun 23. Note: the dashboard currently tracks responses received, not the rate against invited — computing the rate requires wiring Enterprise Solutions' outreach/invited numbers into the base. Manual until schema work connects them.</div>
+              <div class="kpi-track"><span class="track-label">Will live in:</span> <a href="https://airtable.com/appR53P7uGAStqPhv/pagk0yYBka9BCJFSN" target="_blank">Synthesis Dashboard</a> — responses tracked; rate calc pending</div>
             </div>
           </div>
 
@@ -976,10 +1192,12 @@
               <div class="kpi-name">Macro Coverage</div>
               <div class="kpi-def">% of active domains with ≥1 completed Macro advisor session</div>
               <div class="kpi-meta">
-                <span class="kpi-tag target">Target: 100% by Q3</span>
+                <span class="kpi-tag target">Target: Q3 prioritized domains (not 100% this year)</span>
                 <span class="kpi-tag source">Source: Airtable</span>
                 <span class="kpi-tag cadence">Monthly</span>
               </div>
+              <div class="kpi-note">Reframed Jun 24 with Enterprise Solutions: Q3 is a prioritization phase — target domains first, additional domains selected by refresh/licensing timing and advisor readiness, rather than committing to 100% coverage this year.</div>
+              <div class="kpi-track"><span class="track-label">Tracked in:</span> <a href="https://airtable.com/appR53P7uGAStqPhv/pagk0yYBka9BCJFSN" target="_blank">Synthesis Dashboard — Requests by Domain</a></div>
             </div>
           </div>
         </div>
@@ -997,6 +1215,8 @@
                 <span class="kpi-tag source">Source: DSCA session</span>
                 <span class="kpi-tag cadence">Per cycle</span>
               </div>
+              <div class="kpi-note">Underlying data already captured in the dashboard — Scope Adequacy, Role Match, Sequencing, and Exit Profile Clarity (all 1–5, currently averaging ~4). Open item: agree the formula that combines these sub-scores into one alignment number. Definition question, not a data-collection gap.</div>
+              <div class="kpi-track"><span class="track-label">Tracked in:</span> <a href="https://airtable.com/appR53P7uGAStqPhv/pagk0yYBka9BCJFSN" target="_blank">Synthesis Dashboard — sub-scores live</a></div>
             </div>
           </div>
 
@@ -1004,12 +1224,13 @@
             <div class="kpi-dot" style="background:var(--e1)"></div>
             <div class="kpi-content">
               <div class="kpi-name">Micro Coverage</div>
-              <div class="kpi-def">% of target courses with completed Micro (skill/competency-level) advisor capture. <em>Scope decision pending Enterprise Solutions alignment — recommendation is to focus on Macro across all market-driven products this year and re-introduce Micro in 2027.</em></div>
+              <div class="kpi-def">% of target courses with completed Micro (skill/competency-level) advisor capture.</div>
               <div class="kpi-meta">
-                <span class="kpi-tag target">Target: TBC after Laura Standley alignment</span>
-                <span class="kpi-tag source">Source: Airtable</span>
-                <span class="kpi-tag cadence">Monthly (once activated)</span>
+                <span class="kpi-tag target">Deferred to 2027</span>
+                <span class="kpi-tag source">Source: Airtable (when activated)</span>
+                <span class="kpi-tag cadence">N/A this year</span>
               </div>
+              <div class="kpi-note">Not a gap — a deliberate scope decision. 2026 focus is Macro across all market-driven products; Micro re-introduces in 2027 once scaling and tooling are sorted. Confirmed direction with Enterprise Solutions; Cyber/Critical Infrastructure Micro may be revisited later this year only if capacity allows.</div>
             </div>
           </div>
         </div>
@@ -1156,6 +1377,7 @@
                 <span class="kpi-tag source">Source: Salesforce</span>
                 <span class="kpi-tag cadence">Per cohort</span>
               </div>
+              <div class="kpi-track pending"><span class="track-label">Tracked in:</span> Salesforce — baseline pull under development</div>
             </div>
           </div>
 
@@ -1218,13 +1440,13 @@
 
   <div class="notes-row">
     <div class="note-box">
-      <h4>Open Decisions (Required Before Day 60)</h4>
+      <h4>Open Decisions &amp; Status (as of Jun 24)</h4>
       <ul>
-        <li><strong>Engine 1 scope this year:</strong> Stay Macro across all market-driven products and defer Micro to 2027? Recommendation in flight — aligning with Laura Standley (Enterprise Solutions).</li>
-        <li><strong>Engine 2 architecture:</strong> Airtable vs. Shahparan's internal app vs. fold-together. Viktor owns framing after discovery call with Shahparan; technical eval routes to Shahparan + Kayla.</li>
-        <li><strong>Signal Triage SLA split:</strong> Separate cadence for system/broken signals (48h, dev team) vs. design/content signals (longer, owned by Design team). To be defined in Engine 2 SOP refinement.</li>
-        <li><strong>Dashboard platform:</strong> Bolaji has begun building dashboard views in Airtable (à la carte input, focus group findings, filtered-by-product view). Integration vs. consolidation TBD.</li>
-        <li><strong>Baseline data pull:</strong> Salesforce access confirmed. First pull needed to set credential attainment and JAR baselines.</li>
+        <li><strong>Engine 1 scope this year:</strong> <em>Largely settled.</em> Macro across all market-driven products in 2026; Micro deferred to 2027. Confirmed direction with Laura Standley's team; Q3 priority domains being finalized (software development locked, second domain pending advisor-picture review).</li>
+        <li><strong>Engine 2 architecture:</strong> <em>Open — recommendation mid-July.</em> Airtable vs. Shahparan's internal app vs. fold-together. Now informed by Shahparan's four-audience model (employer / instructor / curriculum developer / employed graduate) and the design-vs-delivery distinction. Viktor owns framing; technical eval routes to Shahparan + Kayla.</li>
+        <li><strong>Feedback-to-licensing traceability:</strong> <em>In motion.</em> Evidence Trace built (see tab 4) and endorsed by Bolaji Jun 23. Being folded into the refresh worksheet with Aishwarya this week; target to support the Jul 1 leading-indicator report.</li>
+        <li><strong>KPI data wiring:</strong> <em>Partial.</em> Several metrics have live data (sub-scores, response counts); others need building — Advisor NPS survey, participation-rate calculation (responses ÷ invited), and the Salesforce baseline pull. Mid-July dashboard target.</li>
+        <li><strong>Airtable schema rationalization:</strong> <em>Pending.</em> ETS uses ~4 core tabs; the rest is largely unused. Clean-schema work to be scoped with the Airtable team (Doug + Priya) once Engine 2 architecture is decided. MCP/AI access gated until Claude Enterprise + RBAC lands.</li>
       </ul>
     </div>
     <div class="note-box">
@@ -1243,7 +1465,7 @@
 
   <div class="footer">
     <span>DSCA KPI Tree · v1 · Per Scholas Curriculum Solutions · Internal Use Only</span>
-    <span>Viktor Shumylo · Director, Strategic Programs · June 2026</span>
+    <span>Viktor Shumylo · Director, Product Strategy & Programs · June 2026</span>
   </div>
 
 </div><!-- /kpi panel -->
@@ -1261,7 +1483,7 @@
     </div>
     <div class="header-right">
       Per Scholas | Curriculum Solutions<br>
-      Owner: Viktor Shumylo, Director, Strategic Programs<br>
+      Owner: Viktor Shumylo, Director, Product Strategy & Programs<br>
       Companion to: DSCA KPI Tree v1<br>
       Status: v1 · June 2026
     </div>
@@ -1475,7 +1697,7 @@
 
   <div class="footer">
     <span>DSCA System Map · v1 · Per Scholas Curriculum Solutions · Internal Use Only</span>
-    <span>Viktor Shumylo · Director, Strategic Programs · June 2026</span>
+    <span>Viktor Shumylo · Director, Product Strategy & Programs · June 2026</span>
   </div>
 
 </div><!-- /sysmap panel -->
@@ -1521,6 +1743,21 @@
         <li>Canvas help-desk intake</li>
         <li>Instructor NPS</li>
       </ul>
+    </div>
+  </div>
+
+  <div class="principle sf-audience-block" style="margin-top:24px;background:linear-gradient(135deg,#FFF8F3 0%,#fff 100%);border-left:4px solid var(--ps-orange);">
+    <div class="principle-icon">🧩</div>
+    <div class="principle-text">
+      <h2>Engine 2, refined: four feedback audiences, two signal types</h2>
+      <p>Discovery with Shahparan Hasnat (VP, Product Development &amp; Operations, Jun 16) sharpened how internal feedback is structured. Engine 2 is not one audience — it is up to four, and each gives a different <em>type</em> of signal. The architecture recommendation (mid-July) will reflect this.</p>
+      <div class="sf-audiences">
+        <div class="aud-card"><strong>1 · Employer partners</strong><span>External validation — already covered by Engine 1 / DSCA today.</span></div>
+        <div class="aud-card"><strong>2 · Instructors</strong><span>Delivery-side signal — what works and breaks in the live classroom.</span></div>
+        <div class="aud-card"><strong>3 · Curriculum developers</strong><span>Design-side signal — sequencing, scope, structure of the curriculum itself.</span></div>
+        <div class="aud-card"><strong>4 · Employed graduates</strong><span>Closed-loop signal — alumni working in the domain become quasi-employer feedback.</span></div>
+      </div>
+      <p style="margin-top:14px;"><strong>The design-vs-delivery distinction.</strong> Two signals look alike but are not. <em>Design</em> feedback is about the recipe — is the curriculum sequenced and scoped correctly? <em>Delivery</em> feedback is about the cooking — did this instance run well? The same course can be well-designed but poorly delivered, or vice versa. Engine 2 must separate these so a delivery hiccup is not mistaken for a design flaw.</p>
     </div>
   </div>
 
@@ -1658,10 +1895,97 @@
 
   <div class="footer">
     <span>DSCA Signal-to-Decision Flow · Per Scholas Curriculum Solutions · Internal Use Only</span>
-    <span>Prepared by Viktor Shumylo, Director, Strategic Programs</span>
+    <span>Prepared by Viktor Shumylo, Director, Product Strategy & Programs</span>
   </div>
 
 </div><!-- /signalflow panel -->
+
+
+<!-- ═══════════════════════════════════════
+     TAB 4 — DSCA EVIDENCE TRACE
+════════════════════════════════════════ -->
+<div id="evidence" class="tab-panel">
+
+  <div class="et-header">
+    <div>
+      <h1>DSCA Evidence Trace</h1>
+      <div class="subtitle">Closing the loop: advisor signal → curriculum decision → licensing citation</div>
+    </div>
+    <div class="et-header-right">
+      <strong>Per Scholas | Curriculum Solutions</strong>
+      Owner: Viktor Shumylo, Director, Product Strategy &amp; Programs<br>
+      Built with: Aishwarya Bhave, Sr. Director, Product Management<br>
+      Status: v1 · Jun 24
+    </div>
+  </div>
+
+  <div class="et-intro">
+    <h2>Why this exists</h2>
+    <p>The Employer Curriculum Advisory Boards charter sets a product-specific KPI: <strong>70% of curriculum licensing submissions should cite advisor findings as part of the justification.</strong> Today there is strong advisor recruitment and engagement — but no systematic trace from a specific piece of advisor feedback to the curriculum decision it shaped to the licensing submission that cites it.</p>
+    <p>The Evidence Trace closes that gap. For every market-driven refresh, three columns are captured inside the design team's existing evidence worksheet — so the trace is a byproduct of the work, not a separate task layered on top.</p>
+    <span class="et-endorse">✓ Approved with Bolaji Saibu in the Product Design meeting, Jun 23 — folded into the curriculum refresh template</span>
+  </div>
+
+  <div class="et-chain">
+    <div class="et-col c1">
+      <div class="et-col-num">1</div>
+      <h3>What advisors said</h3>
+      <p>The raw signal. Captured from focus groups, à la carte conversations, surveys, or JTA sessions and synthesized by the Product Owner.</p>
+      <div class="et-example">e.g. "Cyber advisors across two focus groups flagged that SOC analysts now need hands-on SIEM tuning, not just theory."</div>
+    </div>
+    <div class="et-connector">→</div>
+    <div class="et-col c2">
+      <div class="et-col-num">2</div>
+      <h3>What we changed or validated</h3>
+      <p>The curriculum decision that resulted. Either a change made to scope/sequence/content, or an explicit validation that the current design already meets the need.</p>
+      <div class="et-example">e.g. "Added a SIEM tuning lab to Module 4; expanded hands-on hours from 6 to 10."</div>
+    </div>
+    <div class="et-connector">→</div>
+    <div class="et-col c3">
+      <div class="et-col-num">3</div>
+      <h3>Where it shows up</h3>
+      <p>The proof point. The specific outline section, JTA task, or roadmap item where the change is now reflected — and, where applicable, the licensing submission that cites it.</p>
+      <div class="et-example">e.g. "UCI 1033 outline §4.2; JTA task 4.2.1; cited in June licensing submission."</div>
+    </div>
+  </div>
+
+  <div class="et-cta">
+    <div class="et-cta-text">
+      <h3>The live Evidence Trace</h3>
+      <p>The trace lives inside the design team's market-driven refresh evidence worksheet, so advisor input, the resulting decision, and the proof point are all captured in one place as the refresh work happens. Links open the working artifacts directly.</p>
+      <div class="et-status-note">Links below are placeholders pending confirmation with Aishwarya / Enterprise Solutions on the canonical worksheet location.</div>
+    </div>
+    <div class="et-btn-row">
+      <a href="#" target="_blank" class="et-btn">📋 &nbsp;Open Evidence Worksheet</a>
+      <a href="https://airtable.com/appR53P7uGAStqPhv/pagk0yYBka9BCJFSN" target="_blank" class="et-btn secondary">📊 &nbsp;Synthesis Dashboard</a>
+    </div>
+  </div>
+
+  <div class="et-how">
+    <div class="et-how-card">
+      <h4>How it connects to the KPI Tree</h4>
+      <ul>
+        <li>Feeds <strong>Market Validation Coverage</strong> — every refresh with documented advisor evidence.</li>
+        <li>Feeds the charter's <strong>licensing-citation KPI</strong> (70% of submissions citing advisor findings).</li>
+        <li>Provides the data layer for <strong>Close-the-Loop</strong>, owned by Enterprise Solutions.</li>
+      </ul>
+    </div>
+    <div class="et-how-card">
+      <h4>Who does what</h4>
+      <ul>
+        <li><strong>Product Owners</strong> capture columns 1 and 2 during the refresh.</li>
+        <li><strong>Viktor</strong> maintains the trace structure and reporting view.</li>
+        <li><strong>Enterprise Solutions</strong> uses column 3 to close the loop with advisors and cite findings in licensing.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>DSCA Evidence Trace · v1 · Per Scholas Curriculum Solutions · Internal Use Only</span>
+    <span>Viktor Shumylo · Director, Product Strategy &amp; Programs · June 2026</span>
+  </div>
+
+</div><!-- /evidence panel -->
 
 <script>
   function switchTab(id, btn) {
